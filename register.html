@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABANA_ONLINE - Registro</title>
+    <link rel="stylesheet" href="ses.csstyl.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>¡ÚNETE A LA AVENTURA! 🐾</h2>
+        <form id="registerForm" class="register-form">
+            <div class="input-group">
+                <label for="newEmail">Correo Electrónico</label>
+                <input type="email" id="newEmail" name="email" placeholder="Ingresa tu correo" required>
+            </div>
+            <div class="input-group">
+                <label for="newPassword">Contraseña</label>
+                <input type="password" id="newPassword" name="password" placeholder="Crea una contraseña" required>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Confirmar Contraseña</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirma tu contraseña" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Registrar</button>
+            </div>
+            <div class="form-footer">
+                <a href="login.html">¿Ya tienes cuenta? Inicia sesión aquí.</a>
+            </div>
+            <p id="errorMessage" style="color:red; display:none;">Las contraseñas no coinciden o el correo ya está registrado.</p>
+        </form>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('newEmail').value;
+            const password = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Las contraseñas no coinciden.";
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            if (users.find(user => user.email === email)) {
+                errorMessage.textContent = "El correo electrónico ya está registrado.";
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            const newUser = { email, password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+            window.location.href = 'blog,html';
+        });
+    </script>
+</body>
+</html>
