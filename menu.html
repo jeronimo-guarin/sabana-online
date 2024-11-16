@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABANA_ONLINE</title>
+    <link rel="stylesheet" href="ses.csstyl.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>AVENTURATE 🐾 EN LA SABANA 🐾</h2>
+        <form id="loginForm" class="login-form">
+            <div class="input-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Iniciar Sesión</button>
+            </div>
+            <div class="form-footer">
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+        <div id="errorMessage" style="color: red; display: none;"></div>
+    </div>
+
+    <script>
+        // Definición de los usuarios
+        const users = [
+            { email: 'usuario@example.com', password: '12345' },
+            { email: 'admin@example.com', password: 'admin123' }
+        ];
+
+        // Obtener el formulario y el div de error
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Evento del formulario
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+            // Obtener los valores de los campos
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Buscar al usuario con el email y la contraseña proporcionados
+            const user = users.find(user => user.email === username && user.password === password);
+
+            if (user) {
+                // Si las credenciales son correctas, guardar el usuario en localStorage
+                localStorage.setItem('loggedInUser', JSON.stringify(user));
+                
+                // Redirigir al menú (o dashboard)
+                window.location.href = 'menu.html';
+            } else {
+                // Si las credenciales no son correctas, mostrar el mensaje de error
+                errorMessage.textContent = 'Correo o contraseña incorrectos';
+                errorMessage.style.display = 'block'; // Mostrar el error
+            }
+        });
+    </script>
+</body>
+</html>
