@@ -1,11 +1,10 @@
-/* Reset de márgenes y padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Fondo de la página */
+
 body {
     font-family: 'Arial', sans-serif;
     background: url('https://www.example.com/selva.jpg') no-repeat center center fixed;
@@ -17,7 +16,6 @@ body {
     color: white;
 }
 
-/* Contenedor del formulario de login */
 .login-container {
     background: rgba(0, 0, 0, 0.7);
     padding: 40px;
@@ -27,7 +25,7 @@ body {
     text-align: center;
 }
 
-/* Estilo para el título */
+
 h2 {
     font-size: 2.5em;
     color: #33cc33;
@@ -35,13 +33,11 @@ h2 {
     font-family: 'Georgia', serif;
 }
 
-/* Estilos para los grupos de entrada (input) */
 .input-group {
     margin-bottom: 20px;
     text-align: left;
 }
 
-/* Estilos para las etiquetas (labels) */
 label {
     display: block;
     margin-bottom: 8px;
@@ -49,7 +45,6 @@ label {
     color: #f1c40f;
 }
 
-/* Estilos para los campos de texto (inputs) */
 input {
     width: 100%;
     padding: 10px;
@@ -61,13 +56,11 @@ input {
     font-size: 1.1em;
 }
 
-/* Efecto cuando el campo de entrada está en foco */
 input:focus {
     outline: none;
     border-color: #33cc33;
 }
 
-/* Estilo para el botón */
 button {
     width: 100%;
     padding: 12px;
@@ -80,12 +73,10 @@ button {
     transition: background-color 0.3s;
 }
 
-/* Efecto hover para el botón */
 button:hover {
     background-color: #228b22;
 }
 
-/* Estilos para el enlace de olvido de contraseña */
 .form-footer {
     margin-top: 20px;
 }
@@ -96,7 +87,6 @@ button:hover {
     font-size: 0.9em;
 }
 
-/* Estilos adicionales */
 .form-footer a:hover {
     text-decoration: underline;
 }
