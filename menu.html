@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <link rel="stylesheet" href="ses.csstyl.css">
+</head>
+<body>
+    <div class="menu-container">
+        <div class="logo">SABANA_ONLINE</div>
+        <nav>
+            <a href="inicio.html">Inicio</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="publicar.html">Publicar</a>
+            <a href="info.html">sobre la pagina
+                
+            </a>
+        </nav>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-mobile" id="menuMobile">
+            <a href="inicio.html">Inicio</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="publicar.html">Publicar</a>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const menuMobile = document.getElementById('menuMobile');
+
+        menuToggle.addEventListener('click', () => {
+            menuMobile.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
+
+
+
+
