@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar - SABANA_ONLINE</title>
+    <link rel="stylesheet" href="ses.csstyl.css">
+</head>
+<body>
+    <div class="menu-container">
+        <div class="logo">SABANA_ONLINE</div>
+        
+        <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+        <nav id="menu" class="menu-hidden">
+            <a href="perfil.html">Perfil</a>
+            <a href="publicar.html">Publicar</a>
+            <a href="info.html">Sobre la página</a>
+            <a href="login.html">Cerrar sesión</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1>¡Comparte tu experiencia en la sabana!</h1>
+      
+        <form id="postForm">
+            <div class="input-group">
+                <textarea id="postContent" placeholder="Escribe tu publicación aquí..." required></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Publicar</button>
+            </div>
+        </form>
+        
+        <p id="successMessage" style="color: green; display:none;">¡Publicación exitosa!</p>
+        <p id="errorMessage" style="color: red; display:none;">Por favor, escribe algo en tu publicación.</p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('menu-hidden');
+        }
+
+        const postForm = document.getElementById('postForm');
+        const postContent = document.getElementById('postContent');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        postForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const content = postContent.value.trim();
+
+            if (!content) {
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+            const newPost = {
+                content: content,
+                timestamp: new Date().toISOString() 
+            };
+
+            posts.push(newPost);
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+
+            postContent.value = '';
+
+            setTimeout(() => {
+                window.location.href = 'perfil.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

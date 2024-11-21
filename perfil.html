@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABANA_ONLINE - Perfil</title>
+    <link rel="stylesheet" href="ses.csstyl.css">
+    <link rel="icon" href="images/l.png" type="image/png">
+</head>
+<body>
+    <div class="menu-container">
+        <div class="logo">SABANA_ONLINE</div>
+        <nav>
+            <a href="publicar.html">Publicar</a>
+            <a href="info.html">Sobre la página</a>
+            <a href="login.html" onclick="logout()">Cerrar sesión</a>
+        </nav>
+    </div>
+
+    <div class="perfil-container">
+        <h1>Perfil del Usuario</h1>
+        <div id="userInfo">
+            <p><strong>Nombre de Usuario:</strong> <span id="userEmail"></span></p>
+        </div>
+
+        <h2>Mis Publicaciones</h2>
+        <ul id="userPosts"></ul>
+    </div>
+
+    <script>
+       
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        const userEmail = document.getElementById('userEmail');
+        const userPosts = document.getElementById('userPosts');
+
+        if (loggedInUser) {
+            
+            userEmail.textContent = loggedInUser.email;
+
+           
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const userSpecificPosts = posts.filter(post => post.userEmail === loggedInUser.email);
+
+        
+            userSpecificPosts.forEach(post => {
+                const li = document.createElement('li');
+                li.textContent = post.content;
+                userPosts.appendChild(li);
+            });
+        } else {
+       
+            window.location.href = 'login.html';
+        }
+
+     
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+        }
+    </script>
+</body>
+</html>
