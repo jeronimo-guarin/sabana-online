@@ -3,78 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SABANA_ONLINE - Publicar</title>
-    <link rel="stylesheet" href="ses.csstyl.css">
+    <title>Menú Principal</title>
+    <link rel="stylesheet" href="ses.csstyl.css"> 
+    <link rel="stylesheet" href="posts.css"> 
 </head>
 <body>
     <div class="menu-container">
         <div class="logo">SABANA_ONLINE</div>
         <nav>
+           
             <a href="perfil.html">Perfil</a>
+            <a href="publicar.html">Publicar</a>
             <a href="info.html">Sobre la página</a>
             <a href="login.html" onclick="logout()">Cerrar sesión</a>
         </nav>
     </div>
 
-    <div class="container">
-        <h1>¡Comparte tu experiencia en la sabana!</h1>
-      
-        <form id="postForm">
-            <div class="input-group">
-                <textarea id="postContent" placeholder="Escribe tu publicación aquí..." required></textarea>
-            </div>
-            <div class="form-actions">
-                <button type="submit">Publicar</button>
-            </div>
-        </form>
-        
-        <p id="successMessage" style="color: green; display:none;">¡Publicación exitosa!</p>
-        <p id="errorMessage" style="color: red; display:none;">Por favor, escribe algo en tu publicación.</p>
+    <div class="posts-container" id="postsContainer">
+        <h2>Publicaciones Recientes</h2>
+        <ul id="allPosts"></ul>
     </div>
 
     <script>
-        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        const allPosts = document.getElementById('allPosts');
 
-        if (!loggedInUser) {
-            window.location.href = 'login.html'; // Redirigir si no está logueado
+        
+        function loadAllPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+            allPosts.innerHTML = ''; 
+
+            if (posts.length === 0) {
+                const noPostMessage = document.createElement('li');
+                noPostMessage.textContent = "No hay publicaciones disponibles.";
+                noPostMessage.style.color = "gray";
+                noPostMessage.style.textAlign = "center";
+                allPosts.appendChild(noPostMessage);
+            } else {
+                posts.forEach(post => {
+                    const li = document.createElement('li');
+                    li.className = "post-item";
+
+                    const content = document.createElement('p');
+                    content.textContent = post.content;
+
+                    const author = document.createElement('span');
+                    author.textContent = `Autor: ${post.userEmail}`;
+                    author.className = "post-author";
+
+                    const timestamp = document.createElement('span');
+                    timestamp.textContent = `Publicado el: ${new Date(post.timestamp).toLocaleString()}`;
+                    timestamp.className = "post-timestamp";
+
+                    li.appendChild(content);
+                    li.appendChild(author);
+                    li.appendChild(timestamp);
+                    allPosts.appendChild(li);
+                });
+            }
         }
 
-        const postForm = document.getElementById('postForm');
-        const postContent = document.getElementById('postContent');
-        const successMessage = document.getElementById('successMessage');
-        const errorMessage = document.getElementById('errorMessage');
+       
+        document.addEventListener('DOMContentLoaded', loadAllPosts);
 
-        postForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const content = postContent.value.trim();
-
-            if (!content) {
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
-                return;
-            }
-
-            let posts = JSON.parse(localStorage.getItem('posts')) || [];
-
-            const newPost = {
-                content: content,
-                userEmail: loggedInUser.email, // Asociar publicación con el usuario
-                timestamp: new Date().toISOString()
-            };
-
-            posts.push(newPost);
-            localStorage.setItem('posts', JSON.stringify(posts));
-
-            successMessage.style.display = 'block';
-            errorMessage.style.display = 'none';
-            postContent.value = '';
-
-            setTimeout(() => {
-                window.location.href = 'perfil.html';
-            }, 2000);
-        });
-
+       
         function logout() {
             localStorage.removeItem('loggedInUser');
             window.location.href = 'login.html';
